@@ -1,0 +1,55 @@
+body {
+	padding-top: 80px;
+}
+
+.navbar-nav > li > .dropdown-menu {
+	padding: 15px;
+    width: 200px;
+}
+
+.inner-cover {
+	padding: 40px;
+	text-align: center;
+}
+
+.extra-large {
+	font-size: 50px;
+	color: #c8c8c8;
+}
+.extra-large:hover {
+	color: ghostwhite;
+}
+.medium {
+	font-size: 25px;
+	color: #c8c8c8;
+}
+.medium:hover {
+	color: ghostwhite;
+	text-decoration: none;
+}
+.parallax-window {
+    min-height: 250px;
+    background: transparent;
+    width: 100%;
+}
+.parallax-heading {
+	position: relative;
+	top: 201px;
+	left: 0px;
+	background-color: rgba(6, 6, 6, .5);
+}
+#subheader {
+	color: #6C6C6C;
+	position: relative;
+	bottom: 25px;
+/*	font-variant: small-caps;*/
+}
+.first {
+	position: relative;
+	bottom: 25px;
+}
+/*.container {
+	background-color: black;
+	border-radius: 15px;
+	margin-top: 30px;
+}*/

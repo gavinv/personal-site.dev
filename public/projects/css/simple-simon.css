@@ -1,0 +1,44 @@
+
+
+.squares {
+	width: 240px;
+	height: 240px;
+	display: flex;
+	background: #000;
+	flex-flow: row wrap;
+}
+
+.extreme {
+	background: #ABABAB !important;
+}
+
+.square1 {
+	width: 100px;
+	height: 100px;
+	margin: 10px;
+	background: #D50813;
+	opacity: .6;
+
+}
+.square2 {
+	width: 100px;
+	height: 100px;
+	margin: 10px;
+	background: #36B5FF;
+	opacity: .6;
+
+}
+.square3 {
+	width: 100px;
+	height: 100px;
+	margin: 10px;
+	background: #24F041;
+	opacity: .6;
+}
+.square4 {
+	width: 100px;
+	height: 100px;
+	margin: 10px;
+	background: #EBDA00;
+	opacity: .6;
+}

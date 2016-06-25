@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Weather Map</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<link rel='stylesheet' href='css/weather_map.css'>
+</head>
+<body>
+	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+	<div class='container'>
+		<div class='page-header'>
+			<h1>Weather Map Application <div><small class='location'></small></div></h1>
+		</div>
+		<div class='row'>
+			<!-- var contentString will be appended here -->
+		</div>
+		<p>
+			<div class='input input-group col-xs-4'>
+				<input type='text' id='location' class='form-control' placeholder='Location'>
+				<span class='input-group-btn'>
+					<button class='btn btn-primary'>Update Map</button>
+				</span>
+			</div>
+		</p>
+		<div id='map'></div>
+	</div>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBktnfUiDFnbbSq5irfF1icc3g5iOYEHvc"></script>
+	<script>
+		(function() {
+			'use strict';
+			var markerLat = 29.424122;
+			var markerLng = -98.493629;
+			var $button = $('.btn');
+			var myLatlng = new google.maps.LatLng(markerLat, markerLng);
+			var map = new google.maps.Map(document.getElementById('map'), {
+				zoom: 8,
+				center: myLatlng
+			});
+			var marker = new google.maps.Marker({
+				position: myLatlng,
+				map: map,
+				draggable: true,
+				title:"Drag me!"
+			});
+
+			// geocoder
+			var geocoder = new google.maps.Geocoder();
+			function codeAddress() {
+				var address = $('#location').val();
+				console.log(address);
+				geocoder.geocode({'address': address}, function(results, status) {
+					if (status == google.maps.GeocoderStatus.OK) {
+						map.setCenter(results[0].geometry.location);
+						marker.setMap(null);
+						marker = new google.maps.Marker({
+							map: map,
+							position: results[0].geometry.location,
+							draggable: true
+						});
+						marker.addListener('dragend', function() {
+							marker.getPosition();
+							markerLat = marker.getPosition().lat();
+							markerLng = marker.getPosition().lng();
+							update();
+						});
+						markerLat = results[0].geometry.location.lat();
+						markerLng = results[0].geometry.location.lng();
+						update();
+					} else {
+						alert("Geocode was not successful for the following reason: " + status);
+					}
+				});
+			}
+
+			// open weather api
+			function update() {
+				$.get("http://api.openweathermap.org/data/2.5/forecast/daily", {
+					APPID: "4d754de6f96d1dc3ef0fad7748dd7967",
+					units: 'imperial',
+					cnt: '3',
+					lat: markerLat,
+					lon: markerLng
+				}).done(function(data) {
+					$('.row').html('')
+					$('.location').html(data.city.name);
+					data.list.forEach(function(a) {
+						var contentString = '';
+						contentString += '<div class="day col-xs-4">'
+						contentString += '<h3>' + Math.round(a.temp.day) + '&deg;</h3>';
+						contentString += '<img src="http://openweathermap.org/img/w/' + a.weather[0].icon + '.png">';
+						contentString += '<div><sup>' + Math.round(a.temp.min) + '&deg; / ' + Math.round(a.temp.max) + '&deg;</sup></div>'
+						contentString += '<p><strong>' + a.weather[0].main + ':</strong>' + '  ' + a.weather[0].description + '</p>';
+						contentString += '<p><strong>Humidity:</strong>' + '  ' + a.humidity + '</p>';
+						contentString += '<p><strong>Wind:</strong>' + '  ' + Math.round(a.speed) + ' mph</p>';
+						contentString += '<p><strong>Pressure:</strong>' + '  ' + a.pressure + '</p>';
+						contentString += '</div>';
+						$('.row').append(contentString);
+						switch(a.weather[0].main) {
+							case 'Rain':
+								$('body').css('background-image', 'url("img/rain.jpg")');
+								break;
+							case 'Clear':
+								$('body').css('background-image', 'url(img/clear_sky.jpg)');
+								break;
+							case 'Clouds':
+								$('body').css('background-image', 'url(img/clouds.jpg)');
+								break;
+						}
+					})
+				});
+			};
+
+
+			update();
+			marker.addListener('dragend', function() {
+				marker.getPosition();
+				markerLat = marker.getPosition().lat();
+				markerLng = marker.getPosition().lng();
+				update();
+			});
+			$button.click(codeAddress);
+		})();
+	</script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+</body>
+</html>

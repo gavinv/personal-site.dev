@@ -1,0 +1,32 @@
+body {
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+}
+
+.input {
+	margin: auto;
+}
+
+#map {
+	height: 300px;
+}
+
+.container {
+}
+
+.page-header {
+	text-align: center;
+	background-color: ghostwhite;
+ 	background: rgba(255, 255, 255, 0.45);
+ 	border-radius: 250px;
+}
+
+.day {
+	text-align: center;
+	border: 1px solid grey;
+	background: rgba(248,248,255, 0.8);
+	border-radius: 15px;
+}
+.day:hover {
+	background: rgba(248,248,255, 1.0);
+}
