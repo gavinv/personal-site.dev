@@ -40,6 +40,9 @@
 					commitsString += '<small><a href="' + commits[i].committer.html_url + '">' + commits[i].committer.login + '</a> committed ' + moment(commits[i].commit.committer.date).fromNow() + '</small>';
 					commitsString += '</div>';
 					commitsString += '</td>';
+					commitsString += '<td>';
+					commitsString += '<a href="' + commits[i].html_url + '">' + (commits[i].sha).substring(0, 6) + '</a>';
+					commitsString += '</td>';
 					commitsString += '</tr>';
 					commitsString += '</tbody></table>'
 				}	
