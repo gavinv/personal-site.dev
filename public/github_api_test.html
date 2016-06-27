@@ -6,36 +6,39 @@
 </head>
 <body>
 	<ul class="nav nav-tabs nav-justified">
-		<li role="presentation" class="active"><a href="#">Home</a></li>
 	</ul>
+	<div class="tab-content">
+ 	</div>
 	<div id="projects"></div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<!-- 	<script src="/js/github_query.js" type="text/javascript"></script> -->
 	<script type="text/javascript">
 	(function(){
-	// $(function() {
-	// 	$("#projects").loadRepositories("gavinv");
-	// });
 
-	$.getJSON("https://api.github.com/users/gavinv/repos", function(data) {
-		$.getJSON(data[0].commits_url.slice(0, -6), function(data) {
-			$('.lastcommit').text(data[0].sha);
-			console.log($('.lastcommit').text(data[0].sha));
-			console.log(data);
-		});
-	});
+	$.getJSON("https://api.github.com/users/gavinv/repos?access_token=d63d90d4c42908acd716a3eeabb205af9c57ff85", function(data) {
 
-	$.getJSON("https://api.github.com/users/gavinv/repos", function(data) {
-		console.log(data);
+		console.log(data, 'repos');
 	}).done(function(data) {
 		data.forEach(function(repository) {
-			var contentString = '';
-			contentString += '<li role="presentation"><a href=" ' + repository.html_url + ' ">' + repository.name + '</a></li>';
-			$('.nav').append(contentString);
+			$.getJSON("https://api.github.com/repos/gavinv/" + repository.name + "/commits?access_token=d63d90d4c42908acd716a3eeabb205af9c57ff85", function(commits) {
+			console.log(commits, 'commits');
+			var commitsString = '';
+			commitsString += '<div role="tabpanel" class="tab-pane fade" id="repository-' + repository.id + '"><h3>Blah  blah blah</h3></div>';
+			$('.tab-content').append(commitsString);
+		})
+			var tabsString = '';
+			tabsString += '<li role="presentation" role="tab" data-toggle="tab"><a href="#repository-' + repository.id + '">' + repository.name + '</a></li>';
+			$('.nav').append(tabsString);
+			$('.nav a').click(function (e) {
+			  e.preventDefault()
+			  $(this).tab('show')
+			})
 		});
 	})
+
+
 	})();
-	</script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+</script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 </body>
 </html>
