@@ -21,11 +21,14 @@
 	}).done(function(data) {
 		data.forEach(function(repository) {
 			$.getJSON("https://api.github.com/repos/gavinv/" + repository.name + "/commits?access_token=d63d90d4c42908acd716a3eeabb205af9c57ff85", function(commits) {
-			console.log(commits, 'commits');
-			var commitsString = '';
-			commitsString += '<div role="tabpanel" class="tab-pane fade" id="repository-' + repository.id + '"><h3>Blah  blah blah</h3></div>';
-			$('.tab-content').append(commitsString);
-		})
+				console.log(commits, 'commits');
+				var commitsString = '<div role="tabpanel" class="tab-pane fade" id="repository-' + repository.id + '">';
+				for(var i = 0; i < 3; i++){
+				commitsString += '<p>' + commits[i].commit.message + '</p>';
+				}	
+				commitsString += '</div>';
+				$('.tab-content').append(commitsString);
+			})
 			var tabsString = '';
 			tabsString += '<li role="presentation" role="tab" data-toggle="tab"><a href="#repository-' + repository.id + '">' + repository.name + '</a></li>';
 			$('.nav').append(tabsString);
