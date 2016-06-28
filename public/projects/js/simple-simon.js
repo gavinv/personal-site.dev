@@ -9,7 +9,6 @@ $(document).ready(function() {
 	var speedUpMode = false;
 	var extremeMode = false;
 	var gameOver = [1, 3, 4, 2, 1, 3, 4];
-	var $sound = $('#sound').get(0);
 	//var isAnimationOn = true;
 
 	function randomNumber(amount) {
@@ -31,7 +30,6 @@ $(document).ready(function() {
 			var i = 0;
 			var intervalId = setInterval(function(){
 				animate($buttons.eq(solution[i]-1));
-				$sound.play();
 				i++;
 				if(solution.length == i) {
 					clearInterval(intervalId);

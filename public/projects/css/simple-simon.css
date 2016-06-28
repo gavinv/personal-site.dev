@@ -1,4 +1,11 @@
-
+.medium {
+	font-size: 25px;
+	color: #c8c8c8;
+}
+.medium:hover {
+	color: ghostwhite;
+	text-decoration: none;
+}
 
 .squares {
 	width: 240px;
